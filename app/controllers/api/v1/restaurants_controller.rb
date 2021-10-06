@@ -3,7 +3,7 @@ class Api::V1::RestaurantsController < ApplicationController
 
     # GET /restaurants
     def index
-      @restaurants = restaurant.all
+      @restaurants = Restaurant.all
   
       render json: @restaurants
     end
@@ -15,7 +15,7 @@ class Api::V1::RestaurantsController < ApplicationController
   
     # POST /restaurants
     def create
-      @restaurant = restaurant.new(restaurant_params)
+      @restaurant = Restaurant.new(restaurant_params)
   
       if @restaurant.save
         render json: @restaurant, status: :created, location: @restaurant
@@ -41,7 +41,7 @@ class Api::V1::RestaurantsController < ApplicationController
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_restaurant
-        @restaurant = restaurant.find(params[:id])
+        @restaurant = Restaurant.find(params[:id])
       end
   
       # Only allow a trusted parameter "white list" through.

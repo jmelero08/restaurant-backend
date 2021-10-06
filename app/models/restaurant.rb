@@ -1,4 +1,4 @@
 class Restaurant < ApplicationRecord
-    belongs_to :Location
+    belongs_to :location
     has_many :comments 
 end

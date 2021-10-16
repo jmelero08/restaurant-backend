@@ -1,6 +1,7 @@
 class UserSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :username, :name
+  attributes :username, :name 
+  has_many :restaurants, serializer: RestaurantSerializer 
   attribute :hometown do |user|
     {
       city: user.hometown.city,

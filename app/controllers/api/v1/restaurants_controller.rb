@@ -2,9 +2,14 @@ class Api::V1::RestaurantsController < ApplicationController
     before_action :set_restaurant, only: [:show, :update, :destroy]
 
     def index
-      @restaurants = Restaurant.all
-  
-      render json: @restaurants
+      if logged_in?
+        @restaurants = current_user.restaurants
+        render json: RestaurantSerializer.new(@restaurants)
+      else 
+        render json: {
+          error: "You are not signed in."
+        }
+      end
     end
   
     def show

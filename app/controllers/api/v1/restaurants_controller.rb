@@ -17,20 +17,26 @@ class Api::V1::RestaurantsController < ApplicationController
     end
   
     def create
-      @restaurant = Restaurant.new(restaurant_params)
+      @restaurant = current_user.restaurants.build(restaurant_params)
   
       if @restaurant.save
-        render json: @restaurant, status: :created, location: @restaurant
+        render json:  RestaurantSerializer.new(@restaurant), status: :created
       else
-        render json: @restaurant.errors, status: :unprocessable_entity
+        error_resp = {
+          error: @restaurant.errors.full_messages.to_sentence
+        }
+        render json: error_resp, status: :unprocessable_entity
       end
     end
   
     def update
       if @restaurant.update(restaurant_params)
-        render json: @restaurant
+        render json:  RestaurantSerializer.new(@restaurant), status: :ok
       else
-        render json: @restaurant.errors, status: :unprocessable_entity
+        error_resp = {
+          error: @restaurant.errors.full_messages.to_sentence
+        }
+        render json: error_resp, status: :unprocessable_entity
       end
     end
   

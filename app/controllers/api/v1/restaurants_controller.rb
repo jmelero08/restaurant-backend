@@ -41,7 +41,14 @@ class Api::V1::RestaurantsController < ApplicationController
     end
   
     def destroy
-      @restaurant.destroy
+      if @restaurant.destroy
+        render json:  { data: "Restaurant successfully destroyed" }, status: :ok
+      else
+        error_resp = {
+          error: "Restaurant not found and not destroyed"
+        }
+        render json: error_resp, status: :unprocessable_entity
+      end
     end
   
     private
